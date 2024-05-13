@@ -20,7 +20,7 @@ const DatatableServices = () => {
               >Update</div>
               </Link>
               <Link style={{textDecoration:"none"}}>
-                <div className='deleteButton' onClick={() => {deleteRamenData(params.row.id); getRamenData();}}>Delete</div>
+                <div className='deleteButton' onClick={() => {deleteRamenData(params.row.id); window.location.reload();}}>Delete</div>
                 </Link>
             </div>
         )

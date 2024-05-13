@@ -1,11 +1,46 @@
 import "./new.scss";
 import Sidebar from "../../components/sidebar/Sidebar";
 import Navbar from "../../components/navbar/Navbar";
-import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUploadOutlined";
-import { useState } from "react";
+import { postRamenData, patchRamenData } from '../../datatableServicesSource';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 const Nuevo = ({ inputs, title }) => {
-  const [file, setFile] = useState("");
+  let { state } = useLocation();
+  console.log(state);
+  const data = state ? state.data : {};
+  console.log(data);
+  const [formData, setFormData] = useState(() =>
+    inputs.reduce((acc, input) => ({
+      ...acc,
+      [input.label]: data[input.label] || ''  // Default to empty string or existing data
+    }), {})
+  );
+  const navigate = useNavigate();
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    for (const key of Object.keys(formData)) {
+      // Convert value to string to ensure .trim() can be used
+      const value = String(formData[key]);
+      if (!value.trim()) {
+        alert(`Please fill out the ${key} field.`);
+        return;  // Stop the submission if any field is empty
+      }
+    }
+    if (data.id) {
+      console.log(data.id);
+      console.log(formData);
+      const datos = await patchRamenData(data.id, formData);
+      console.log(datos);
+      navigate('/services');
+      return;
+    }
+    const dataa = await postRamenData(formData);
+    console.log(formData);
+    console.log(dataa);
+    navigate('/services');
+  };
 
   return (
     <div className="new">
@@ -16,37 +51,41 @@ const Nuevo = ({ inputs, title }) => {
           <h1>{title}</h1>
         </div>
         <div className="bottom">
-          <div className="left">
-            <img
-              src={
-                file
-                  ? URL.createObjectURL(file)
-                  : "https://icon-library.com/images/no-image-icon/no-image-icon-0.jpg"
-              }
-              alt=""
-            />
-          </div>
+          
           <div className="right">
-            <form>
-              <div className="formInput">
-                <label htmlFor="file">
-                  Image: <DriveFolderUploadOutlinedIcon className="icon" />
-                </label>
-                <input
-                  type="file"
-                  id="file"
-                  onChange={(e) => setFile(e.target.files[0])}
-                  style={{ display: "none" }}
-                />
-              </div>
-
+            <form onSubmit={handleSubmit}>
               {inputs.map((input) => (
+               
                 <div className="formInput" key={input.id}>
                   <label>{input.label}</label>
-                  <input type={input.type} placeholder={input.placeholder} />
+                  <input 
+                  type={input.type}
+                  placeholder={input.placeholder}
+                  defaultValue={data ? data[input.label] : ''}
+                  onKeyPress={(event) => {
+                    if (input.type === 'number' && !/[0-9]/.test(event.key)) {
+                      event.preventDefault();
+                    }
+                  }}
+                  onChange={(event) => {
+                    if (input.type === 'number' && event.target.value < 0) {
+                      event.target.value = 0;
+                    }else if (input.max && event.target.value > input.max) {
+                      event.target.value = input.max;
+                    }
+                    const trimmedValue = event.target.value.trimStart();
+                    event.target.value = event.target.value.replace(/^0+/, '');
+                    setFormData({
+                      ...formData,
+                      
+                      [input.label]: trimmedValue,
+                    });
+                    console.log(formData);
+                  }}
+                  />
                 </div>
               ))}
-              <button>Send</button>
+              <button type="submit">Send</button>
             </form>
           </div>
         </div>

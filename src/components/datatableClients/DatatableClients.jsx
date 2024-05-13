@@ -5,7 +5,7 @@ import { DataGrid } from '@mui/x-data-grid';
 import { clientColumns, clientRows } from '../../datatableClientsSource';
 import {Link} from 'react-router-dom'
  
-const DatatableClients = () => {
+const DatatableClients = () => { 
     const actionColumn =[{field:"action", headerName:"Action",width:200, renderCell:() =>
     {
         return(
@@ -24,7 +24,7 @@ const DatatableClients = () => {
         <Link to="/clients/new"style={{textDecoration:"none"}} className='link'>
             Add New
             </Link>
-        </div>
+        </div> 
          <DataGrid
         rows={clientRows}
         columns={clientColumns.concat(actionColumn)}

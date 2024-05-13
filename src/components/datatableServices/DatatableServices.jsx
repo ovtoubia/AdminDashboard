@@ -2,29 +2,43 @@ import React from 'react'
 import "./datatableServices.scss"
 
 import { DataGrid } from '@mui/x-data-grid';
-import { serviceColumns, serviceRows } from '../../datatableServicesSource';
+import { serviceColumns, getRamenData } from '../../datatableServicesSource';
 import {Link} from 'react-router-dom'
+import { useState, useEffect } from 'react';
+import { deleteRamenData } from '../../datatableServicesSource';
+
 
 const DatatableServices = () => {
-    const actionColumn =[{field:"action", headerName:"Action",width:180, renderCell:() =>
+  
+    const actionColumn =[{field:"action", headerName:"Action",width:180, renderCell:(params) =>
     {
+      
         return(
             <div className='cellAction'>
-                <div className='viewButton'>Details</div>
-                <div className='deleteButton'>Delete</div>
+              <Link to={'/services/test'} state={{ data: params.row }}style={{textDecoration:"none"}}>
+              <div className='viewButton' 
+              >Update</div>
+              </Link>
+              <Link style={{textDecoration:"none"}}>
+                <div className='deleteButton' onClick={() => {deleteRamenData(params.row.id); getRamenData();}}>Delete</div>
+                </Link>
             </div>
         )
 
     }}];
+    const [rows, setRows] = useState([]);
+      useEffect(() => {
+        getRamenData().then(data => setRows(data));
+      }, []);
   return (
     <div className='datatableServices'>
-        <div className='datatableServicesTitle'>Services
-        <Link style={{textDecoration:"none"}} className='link'>
+        <div className='datatableServicesTitle'>Menu
+        <Link to="/services/new"style={{textDecoration:"none"}} className='link'>
             Add New
             </Link>
         </div>
          <DataGrid
-        rows={serviceRows}
+        rows={rows}
         columns={serviceColumns.concat(actionColumn)}
         initialState={{
           pagination: {

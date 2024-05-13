@@ -2,7 +2,7 @@ import React from 'react'
 import "./sidebar.scss"
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
-import StoreMallDirectoryOutlinedIcon from '@mui/icons-material/StoreMallDirectoryOutlined';
+import MenuBook from '@mui/icons-material/MenuBook';
 import CreditScoreOutlinedIcon from '@mui/icons-material/CreditScoreOutlined';
 import LocalShippingOutlinedIcon from '@mui/icons-material/LocalShippingOutlined';
 import InsightsOutlinedIcon from '@mui/icons-material/InsightsOutlined';
@@ -12,13 +12,15 @@ import HubOutlinedIcon from '@mui/icons-material/HubOutlined';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
+import RamenDiningIcon from '@mui/icons-material/RamenDining';
 import {Link} from 'react-router-dom';
 const Sidebar = () => {
   return (
     <div className='sidebar'>
         <div className='top'>
             <Link to="/" style={{textDecoration:"none"}}>
-            <span className='logo'>Subit.</span>
+            <RamenDiningIcon className='icon'/>
+            <span className='logo'>Vigor Ramen.</span>
             </Link>
         </div>
     <hr/>
@@ -30,30 +32,30 @@ const Sidebar = () => {
                     <span>Dashboard</span>
                 </li>
                 <p className='title'>MAIN</p>
-                <Link to="/clients" style={{textDecoration:"none"}}>
+                
                 <li>
                     <PersonOutlineOutlinedIcon className='icon'/>
                     <span>Clients</span>
                 </li>
-                </Link>
+                
                 <Link to="/services" style={{textDecoration:"none"}}>
                 <li>
-                    <StoreMallDirectoryOutlinedIcon className='icon'/>
-                    <span>Services</span>
+                    <MenuBook className='icon'/>
+                    <span>Menu</span>
                 </li>
                 </Link>
-                <Link to="/orders" style={{textDecoration:"none"}}>
+                
                 <li>
                     <CreditScoreOutlinedIcon className='icon'/>
                     <span>Orders</span>
                 </li>
-                </Link>
-                <Link to="/vendors" style={{textDecoration:"none"}}>
+                
+                
                 <li>
                     <LocalShippingOutlinedIcon className='icon'/>
                     <span>Vendors</span>
                 </li>
-                </Link>
+                
                 <p className='title'>USEFUL</p>
                 <li>
                     <InsightsOutlinedIcon className='icon'/>

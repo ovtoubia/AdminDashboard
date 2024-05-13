@@ -10,11 +10,14 @@
         align-items: center;
         justify-content: center;
     }
-
+        .icon {
+            font-size: 30px;
+            color: darkred;
+        }
         .logo{
             font-size: 20px;
             font-weight: bold;
-            color:rebeccapurple;
+            color: darkred;
         }
     hr{
         height: 0;
@@ -44,12 +47,12 @@
                 cursor: pointer;
 
                 &:hover {
-                    background-color: #ece8ff;
+                    background-color: #efefefb7;
                 }
 
                 .icon{
                     font-size: 18px;
-                    color: #7451f8;
+                    color: darkred;
                 }
 
                 span{
@@ -69,7 +72,7 @@
             width: 20px;
             height: 20px;
             border-radius: 5px;
-            border: 1px solid #7451f8;
+            border: 1px solid darkred;
             cursor: pointer;
             margin: 5px;
 

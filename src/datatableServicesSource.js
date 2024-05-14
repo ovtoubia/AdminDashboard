@@ -38,7 +38,7 @@ const API_URL = process.env.REACT_APP_RAMENS_API_URL;
 console.log(API_URL);
 export const getRamenData = async () => {
   const response = await axios.get(`${API_URL}/ramens`);
-  return response.data;
+  return response.data.data.ramens;
 };  
 export const postRamenData = async (data) => {
   const response = await axios.post(`${API_URL}/ramens`, data);

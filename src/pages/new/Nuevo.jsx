@@ -30,14 +30,18 @@ const Nuevo = ({ inputs, title }) => {
     }
     if (data.id) {
       console.log(data.id);
+      console.log('lo q se manda:')
       console.log(formData);
       const datos = await patchRamenData(data.id, formData);
+      console.log('respuesta:')
       console.log(datos);
       navigate('/services');
       return;
     }
     const dataa = await postRamenData(formData);
+    console.log('Form Data:')
     console.log(formData);
+    console.log('payload:')
     console.log(dataa);
     navigate('/services');
   };
@@ -70,11 +74,19 @@ const Nuevo = ({ inputs, title }) => {
                   onChange={(event) => {
                     if (input.type === 'number' && event.target.value < 0) {
                       event.target.value = 0;
+                      
                     }else if (input.max && event.target.value > input.max) {
                       event.target.value = input.max;
                     }
-                    const trimmedValue = event.target.value.trimStart();
+
+                    let trimmedValue
                     event.target.value = event.target.value.replace(/^0+/, '');
+                    if (input.type === 'number') {
+                      trimmedValue = Number(event.target.value);
+                    }else{
+                      trimmedValue = event.target.value.trimStart();
+                    }
+                    
                     setFormData({
                       ...formData,
                       
